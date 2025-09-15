@@ -1,9 +1,108 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Youtube } from "lucide-react";
 
 const MealPage = () => {
-  return (
-    <div>MealPage</div>
-  )
-}
+  const { id } = useParams();
+  const [meal, setMeal] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-export default MealPage
+  useEffect(() => {
+    const fetchMeal = async () => {
+      try {
+        const res = await fetch(
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+        );
+        const data = await res.json();
+        console.log(data.meals[0]);
+        setMeal(data.meals);
+      } catch (error) {
+        console.error("Error fetching meal:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMeal();
+  }, [id]);
+
+  
+
+  const ingredients = [];
+  if (meal) {
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = meal[0][`strIngredient${i}`];
+      const measure = meal[0][`strMeasure${i}`];
+      if (ingredient) {
+        ingredients.push(`${ingredient} - ${measure}`);
+      }
+    }
+  }
+
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!meal) return <p className="text-center text-red-500 mt-10">Meal not found!</p>;
+
+  return (
+    <>
+      <div className="">
+        {meal.map((m)=> {
+          return (
+            <div key={m.idMeal} className="max-w-4xl mx-auto p-4">
+              <h1 className="font-bold text-green-500 text-4xl mb-10 underline">
+                Meal details
+              </h1>
+              <div className="grid grid-cols-1 md:grid-cols-2  mb-5">
+                <div>
+                  <img
+                    className="w-96 h-86 rounded-2xl"
+                    src={m.strMealThumb}
+                    alt={m.strMeal}
+                  />
+                </div>
+                <div className="flex flex-col justify-between">
+                  <div className="">
+                    <h1 className="text-3xl font-bold my-4">{m.strMeal}</h1>
+                    <div className="flex gap-6 ">
+                      <p className="mb-2">
+                        <span className="font-bold">Category: </span>
+                        {m.strCategory}
+                      </p>
+                      <p className="mb-2">
+                        <span className="font-bold">Area: </span>
+                        {m.strArea}
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <Link
+                      to={m.strYoutube}
+                      target="_blank"
+                      className="text-red-500 underline flex gap-3 items-center"
+                    >
+                      <Youtube />
+                      <span>Watch Recipe Now</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold my-4 mt-10">Instructions</h2>
+                <p className="text-justify">{m.strInstructions}</p>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold my-4">Ingredients</h2>
+                <ul className="list-disc list-inside">
+                  {ingredients.map((ing, i) => (
+                    <li key={i}>{ing}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
+
+export default MealPage;

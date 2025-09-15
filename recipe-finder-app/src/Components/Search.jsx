@@ -1,16 +1,25 @@
-import React from 'react'
-import { useState } from 'react';
+import React from "react";
 
-const Search = ({query,handleInput,handleSearch }) => {
+const Search = ({ query, handleInput, handleSearch }) => {
   return (
-    <>
-    <div className='text-center mt-9 '>
-        <input className='p-3 bg-gray-400 w-3xl  text-2xl rounded-2xl' type="text" value={query} onChange={handleInput} placeholder='Search Recipe...' />
-        <button className='border-gray-400 bg-amber-500 rounded-xs p-1 ml-3' onClick={handleSearch}>Search</button>
+    <div className="flex justify-center items-center mt-10 px-4">
+      <div className="flex w-full max-w-2xl shadow-md rounded-2xl overflow-hidden">
+        <input
+          type="text"
+          value={query}
+          onChange={handleInput}
+          placeholder="Search recipes..."
+          className="flex-1 px-4 py-3 bg-gray-300 text-lg sm:text-xl border-none focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 transition-all duration-200"
+        >
+          Search
+        </button>
+      </div>
     </div>
-        
-    </>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
