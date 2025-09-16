@@ -7,11 +7,29 @@ import MealPage from "./Pages/MealPage";
 import NotFound from "./Pages/NotFound";
 import Header from "./Components/Header";
 import FavMeals from "./Pages/FavMeals";
-import { ThemeProvider } from "./Context/ThemeContext";
 import Footer from "./Components/Footer";
 
 function App() {
   const [favourite, setFavourite] =useState([]);
+  
+const [theme,setTheme]=useState("")
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.add(savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+
+    document.documentElement.classList.remove(theme);
+    document.documentElement.classList.add(newTheme);
+
+    // Save in localStorage
+    localStorage.setItem("theme", newTheme);
+  };
   
   const handleFav = (meal) => {
   let newFav;
@@ -31,8 +49,8 @@ useEffect(() => {
   }
 }, []);
   return (
-    <ThemeProvider>
-        <Header />
+      <>
+        <Header toggleTheme={toggleTheme} theme={theme} />
         <Routes>
           <Route path="/" element={<Home favourite={favourite} handleFav={handleFav} />} />
           <Route path="/favmeals" element={<FavMeals favourite={favourite} handleFav={handleFav}/>} />
@@ -40,7 +58,7 @@ useEffect(() => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer/>
-    </ThemeProvider>
+      </>
   );
 }
 

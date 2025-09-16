@@ -5,7 +5,7 @@ import { Heart } from 'lucide-react';
 const MealCard = ({ meal,handleFav,favourite }) => {
   const isFav = favourite.some(m => m.idMeal === meal.idMeal);
   return (
-    <div className="bg-white p-1 m-0.5 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 p-1 m-0.5 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
       {/* Image */}
       <img
         className="w-full h-70 rounded-2xl  object-cover"
@@ -14,7 +14,7 @@ const MealCard = ({ meal,handleFav,favourite }) => {
       />
 
       {/* Content */}
-      <div className="p-4 text-center">
+      <div className="p-4 text-center text-gray-900 dark:text-gray-100">
         <h2 className="font-semibold text-lg md:text-xl truncate">
           {meal.strMeal}
         </h2>

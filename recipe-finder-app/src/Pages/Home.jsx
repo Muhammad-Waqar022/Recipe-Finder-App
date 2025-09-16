@@ -88,27 +88,28 @@ const Home = ({ favourite, handleFav }) => {
   const handleSearch = () => {
     fetchMeals(query);
   };
-  
-
 
   return (
-    <div className="max-w-7xl mx-auto px-4">
-      <div className="flex flex-col sm:flex-row justify-center items-center mt-8 px-4">
-  <Search query={query} handleInput={handleInput} handleSearch={handleSearch}  />
-  <RandomButton handleRandom={handleRandom} />
-</div>
-
+    <div className="max-w-7xl mx-auto px-5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="flex flex-col sm:flex-row justify-center items-center px-4">
+        <Search
+          query={query}
+          handleInput={handleInput}
+          handleSearch={handleSearch}
+        />
+        <RandomButton handleRandom={handleRandom} />
+      </div>
 
       <div>
         <h1 className="text-3xl font-bold text-center mt-10  mb-5">
           Browse Categories
         </h1>
-        <div className="flex gap-4 overflow-x-auto p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <div className="flex gap-4 overflow-x-auto p-4">
           {categories.map((category) => (
             <button
               onClick={() => handleCategory(category.strCategory)}
               key={category.idCategory}
-              className={`flex-shrink-0 w-[140px] p-3 rounded-xl border transition hover:shadow-md hover:scale-101`}
+              className={`flex-shrink-0 w-[140px] p-3 rounded-xl border border-gray-300 dark:border-gray-600 transition hover:shadow-md hover:scale-101 dark:hover:bg-gray-800`}
             >
               <img
                 src={category.strCategoryThumb}
@@ -129,12 +130,12 @@ const Home = ({ favourite, handleFav }) => {
         </h1>
       )}
       {error && (
-        <h1 className="text-2xl font-semibold text-red-600 text-center mt-9">
+        <h1 className="text-2xl font-semibold text-center mt-9 text-red-600 dark:text-red-400">
           {error}
         </h1>
       )}
 
-      <div className="mt-10 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9">
+      <div className="mt-10 pb-12 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
         {meals.length > 0
           ? meals.map((meal) => (
               <MealCard
