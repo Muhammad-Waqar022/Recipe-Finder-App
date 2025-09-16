@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Youtube } from "lucide-react";
+import { Heart, Youtube } from "lucide-react";
 
-const MealPage = () => {
+const MealPage = ({ favourite, handleFav }) => {
   const { id } = useParams();
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,8 +25,6 @@ const MealPage = () => {
     fetchMeal();
   }, [id]);
 
-  
-
   const ingredients = [];
   if (meal) {
     for (let i = 1; i <= 20; i++) {
@@ -39,17 +37,32 @@ const MealPage = () => {
   }
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!meal) return <p className="text-center text-red-500 mt-10">Meal not found!</p>;
+  if (!meal)
+    return <p className="text-center text-red-500 mt-10">Meal not found!</p>;
 
   return (
     <>
       <div className="">
-        {meal.map((m)=> {
+        {meal.map((m) => {
           return (
             <div key={m.idMeal} className="max-w-4xl mx-auto p-4">
-              <h1 className="font-bold text-green-500 text-4xl mb-10 underline">
-                Meal details
-              </h1>
+              <div className="flex justify-between items-center">
+                <h1 className="font-bold text-green-500 text-4xl mb-10 underline">
+                  Meal details
+                </h1>
+                <div >
+                  <button
+                    className={`mb-5 px-4 py-2 rounded-lg transition-all duration-200 ${
+                      favourite.some((meal) => meal.idMeal === m.idMeal)
+                        ? "bg-red-500 text-white hover:bg-red-600"
+                        : "bg-transparent border-1 border-green-500 text-green-500 hover:bg-green-600 hover:text-white"
+                    }`}
+                    onClick={() => handleFav(m)}
+                  >
+                    <Heart />
+                  </button>
+                </div>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2  mb-5">
                 <div>
                   <img

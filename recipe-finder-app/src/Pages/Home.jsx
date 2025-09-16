@@ -88,17 +88,16 @@ const Home = ({ favourite, handleFav }) => {
   const handleSearch = () => {
     fetchMeals(query);
   };
+  
+
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      <div className="flex justify-center items-center mt-10 px-4">
-        <Search
-          query={query}
-          handleInput={handleInput}
-          handleSearch={handleSearch}
-        />
-        <RandomButton handleRandom={handleRandom} />
-      </div>
+      <div className="flex flex-col sm:flex-row justify-center items-center mt-8 px-4">
+  <Search query={query} handleInput={handleInput} handleSearch={handleSearch}  />
+  <RandomButton handleRandom={handleRandom} />
+</div>
+
 
       <div>
         <h1 className="text-3xl font-bold text-center mt-10  mb-5">
@@ -135,7 +134,7 @@ const Home = ({ favourite, handleFav }) => {
         </h1>
       )}
 
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="mt-10 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-9">
         {meals.length > 0
           ? meals.map((meal) => (
               <MealCard

@@ -36,7 +36,7 @@ useEffect(() => {
         <Routes>
           <Route path="/" element={<Home favourite={favourite} handleFav={handleFav} />} />
           <Route path="/favmeals" element={<FavMeals favourite={favourite} handleFav={handleFav}/>} />
-          <Route path="/meal/:id" element={<MealPage />} />
+          <Route path="/meal/:id" element={<MealPage favourite={favourite} handleFav={handleFav} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer/>

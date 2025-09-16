@@ -6,41 +6,47 @@ const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <header className="max-w-7xl mx-auto px-4 flex justify-between items-center   p-4 shadow-md bg-green-500  dark:text-white">
-      <h1 className="text-2xl font-bold">🍴 Recipe Finder</h1>
-      <div className="flex gap-4">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `text-lg px-3 py-1 rounded transition-colors ${
-              isActive
-                ? "font-bold text-white bg-green-700"
-                : "text-green-300 hover:text-white hover:bg-green-600"
-            }`
-          }
-        >
-          Home
+    <header className="w-full bg-green-700 dark:bg-green-700 dark:text-white shadow-md">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 py-3 gap-4">
+        <NavLink to="/">
+          <h1 className="text-xl sm:text-2xl font-bold">🍴 Mealify</h1>
         </NavLink>
 
-        <NavLink
-          to="/favmeals"
-          className={({ isActive }) =>
-            `text-lg px-3 py-1 rounded transition-colors ${
-              isActive
-                ? "font-bold text-white bg-green-700"
-                : "text-green-300 hover:text-white hover:bg-green-600"
-            }`
-          }
-        >
-          Favourite Meals
-        </NavLink>
+        {/* Nav Links + Theme Toggle */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `text-base sm:text-lg px-3 py-1 rounded transition-colors ${
+                isActive
+                  ? "font-bold text-white bg-green-800"
+                  : "text-green-100 hover:text-white hover:bg-green-600"
+              }`
+            }
+          >
+            Home
+          </NavLink>
 
-        <button
-          onClick={toggleTheme}
-          className="px-2 py-2 rounded bg-gray-300 dark:bg-green-700"
-        >
-          {theme === "light" ? "Light" : "Dark"}
-        </button>
+          <NavLink
+            to="/favmeals"
+            className={({ isActive }) =>
+              `text-base sm:text-lg px-3 py-1 rounded transition-colors ${
+                isActive
+                  ? "font-bold text-white bg-green-800"
+                  : "text-green-100 hover:text-white hover:bg-green-600"
+              }`
+            }
+          >
+            Favourite Meals
+          </NavLink>
+
+          <button
+            onClick={toggleTheme}
+            className="px-4 py-2 rounded-md border border-gray-400 dark:border-gray-200"
+          >
+            {theme === "light" ? "Dark" : "Light"}
+          </button>
+        </div>
       </div>
     </header>
   );

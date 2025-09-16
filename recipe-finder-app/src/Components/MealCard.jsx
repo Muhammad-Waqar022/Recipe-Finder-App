@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Star } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 const MealCard = ({ meal,handleFav,favourite }) => {
   const isFav = favourite.some(m => m.idMeal === meal.idMeal);
@@ -8,7 +8,7 @@ const MealCard = ({ meal,handleFav,favourite }) => {
     <div className="bg-white p-1 m-0.5 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
       {/* Image */}
       <img
-        className="w-full h-70 rounded-2xl object-cover"
+        className="w-full h-70 rounded-2xl  object-cover"
         src={meal.strMealThumb}
         alt={meal.strMeal}
       />
@@ -26,9 +26,9 @@ const MealCard = ({ meal,handleFav,favourite }) => {
         </Link>
         <button className={`mt-4 px-4 py-2 rounded-lg transition-all duration-200 ${
               isFav
-                ? "bg-yellow-400 text-white hover:bg-yellow-500"
-                : "bg-green-500 text-white hover:bg-green-700"
-            }`} onClick={() => handleFav(meal)}><Star /></button>
+                ? "bg-red-500 text-white hover:bg-red-600"
+                : "bg-transparent border-1 border-green-500 text-green-500 hover:bg-green-600 hover:text-white"
+            }`} onClick={() => handleFav(meal)}><Heart /></button>
       </div>
         </div>
     </div>
