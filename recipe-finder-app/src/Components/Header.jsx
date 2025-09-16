@@ -6,7 +6,7 @@ const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <header className="max-w-7xl mx-auto px-4 flex justify-between items-center  p-4 shadow-md bg-green-500  dark:text-white">
+    <header className="max-w-7xl mx-auto px-4 flex justify-between items-center   p-4 shadow-md bg-green-500  dark:text-white">
       <h1 className="text-2xl font-bold">🍴 Recipe Finder</h1>
       <div className="flex gap-4">
         <NavLink

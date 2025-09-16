@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MealCard from "../Components/MealCard";
 import Search from "../Components/Search";
-
+import RandomButton from "../Components/RandomButton";
 
 const Home = ({ favourite, handleFav }) => {
   const [meals, setMeals] = useState([]);
@@ -9,7 +9,7 @@ const Home = ({ favourite, handleFav }) => {
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
   const [categories, setCategories] = useState([]);
-  
+
   const fetchMeals = async (searchQuery) => {
     setLoading(true);
     setError(null);
@@ -26,7 +26,6 @@ const Home = ({ favourite, handleFav }) => {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchMeals("chicken");
@@ -65,6 +64,22 @@ const Home = ({ favourite, handleFav }) => {
     }
   };
 
+  const handleRandom = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/random.php`
+      );
+      if (!res.ok) throw new Error("Something went wrong");
+      const data = await res.json();
+      setMeals(data.meals);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleInput = (e) => {
     setQuery(e.target.value);
@@ -76,12 +91,14 @@ const Home = ({ favourite, handleFav }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-      {/* 🔍 Search */}
-      <Search
-        query={query}
-        handleInput={handleInput}
-        handleSearch={handleSearch}
-      />
+      <div className="flex justify-center items-center mt-10 px-4">
+        <Search
+          query={query}
+          handleInput={handleInput}
+          handleSearch={handleSearch}
+        />
+        <RandomButton handleRandom={handleRandom} />
+      </div>
 
       <div>
         <h1 className="text-3xl font-bold text-center mt-10  mb-5">
@@ -107,7 +124,6 @@ const Home = ({ favourite, handleFav }) => {
         </div>
       </div>
 
-
       {loading && (
         <h1 className="text-2xl font-semibold text-center mt-9 text-gray-600 animate-pulse">
           Loading meals...
@@ -119,17 +135,21 @@ const Home = ({ favourite, handleFav }) => {
         </h1>
       )}
 
-      {/* 🍽 Meals */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {meals.length > 0 ? (
-          meals.map((meal) =><MealCard key={meal.idMeal} meal={meal} handleFav={handleFav} favourite={favourite}/>)
-        ) : (
-          !loading && (
-            <p className="text-center col-span-full text-red-500 text-lg">
-              No meals found !!
-            </p>
-          )
-        )}
+        {meals.length > 0
+          ? meals.map((meal) => (
+              <MealCard
+                key={meal.idMeal}
+                meal={meal}
+                handleFav={handleFav}
+                favourite={favourite}
+              />
+            ))
+          : !loading && (
+              <p className="text-center col-span-full text-red-500 text-lg">
+                No meals found !!
+              </p>
+            )}
       </div>
     </div>
   );
