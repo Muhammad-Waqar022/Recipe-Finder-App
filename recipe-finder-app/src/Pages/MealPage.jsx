@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Heart, Youtube } from "lucide-react";
+import api from "../API/api";
 
 const MealPage = ({ favourite, handleFav }) => {
   const { id } = useParams();
@@ -10,13 +11,10 @@ const MealPage = ({ favourite, handleFav }) => {
   useEffect(() => {
     const fetchMeal = async () => {
       try {
-        const res = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-        );
-        const data = await res.json();
-        setMeal(data.meals);
+        const res = await api.get(`lookup.php?i=${id}`);
+        setMeal(res.data.meals);
       } catch (error) {
-        console.error("Error fetching meal:", error);
+        console.error("Error fetching meal:", error.message);
       } finally {
         setLoading(false);
       }
@@ -35,8 +33,11 @@ const MealPage = ({ favourite, handleFav }) => {
 
   if (loading)
     return (
-      <p className="text-center mt-10 text-gray-700 dark:text-gray-300">Loading...</p>
+      <p className="text-center mt-10 text-gray-700 dark:text-gray-300">
+        Loading...
+      </p>
     );
+
   if (!meal)
     return (
       <p className="text-center mt-10 text-red-500 dark:text-red-400">

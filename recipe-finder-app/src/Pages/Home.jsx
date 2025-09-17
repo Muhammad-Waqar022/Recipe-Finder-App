@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MealCard from "../Components/MealCard";
 import Search from "../Components/Search";
 import RandomButton from "../Components/RandomButton";
+import api from "../API/api";       
 
 const Home = ({ favourite, handleFav }) => {
   const [meals, setMeals] = useState([]);
@@ -14,12 +15,8 @@ const Home = ({ favourite, handleFav }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`
-      );
-      if (!res.ok) throw new Error("Something went wrong");
-      const data = await res.json();
-      setMeals(data.meals ? data.meals : []);
+      const res = await api.get(`search.php?s=${searchQuery}`);
+      setMeals(res.data.meals ? res.data.meals : []);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,14 +31,10 @@ const Home = ({ favourite, handleFav }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/categories.php`
-        );
-        if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = await res.json();
-        setCategories(data.categories ? data.categories : []);
+        const res = await api.get("categories.php");
+        setCategories(res.data.categories ? res.data.categories : []);
       } catch (err) {
-        console.error(err);
+        console.error(err.message);
       }
     };
     fetchCategories();
@@ -51,12 +44,8 @@ const Home = ({ favourite, handleFav }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`
-      );
-      if (!res.ok) throw new Error("Something went wrong");
-      const data = await res.json();
-      setMeals(data.meals);
+      const res = await api.get(`filter.php?c=${categoryName}`);
+      setMeals(res.data.meals);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -68,12 +57,8 @@ const Home = ({ favourite, handleFav }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/random.php`
-      );
-      if (!res.ok) throw new Error("Something went wrong");
-      const data = await res.json();
-      setMeals(data.meals);
+      const res = await api.get("random.php");
+      setMeals(res.data.meals);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -101,7 +86,7 @@ const Home = ({ favourite, handleFav }) => {
       </div>
 
       <div>
-        <h1 className="text-3xl font-bold text-center mt-10  mb-5">
+        <h1 className="text-3xl font-bold text-center mt-10 mb-5">
           Browse Categories
         </h1>
         <div className="flex gap-4 overflow-x-auto p-4">
@@ -109,7 +94,7 @@ const Home = ({ favourite, handleFav }) => {
             <button
               onClick={() => handleCategory(category.strCategory)}
               key={category.idCategory}
-              className={`flex-shrink-0 w-[140px] p-3 rounded-xl border border-gray-300 dark:border-gray-600 transition hover:shadow-md hover:scale-101 dark:hover:bg-gray-800`}
+              className="flex-shrink-0 w-[140px] p-3 rounded-xl border border-gray-300 dark:border-gray-600 transition hover:shadow-md hover:scale-101 dark:hover:bg-gray-800"
             >
               <img
                 src={category.strCategoryThumb}
