@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Heart, Youtube } from "lucide-react";
+import { Heart, Youtube, ShoppingCart } from "lucide-react";
 import api from "../API/api";
 
-const MealPage = ({ favourite, handleFav }) => {
+const MealPage = ({ favourite, handleFav, addToCart, cart }) => {
   const { id } = useParams();
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -11,13 +11,12 @@ const MealPage = ({ favourite, handleFav }) => {
   useEffect(() => {
     const fetchMeal = async () => {
       try {
-        // 1. Try API first
         const res = await api.get(`/lookup.php?i=${id}`);
         if (res.data.meals) {
-          setMeal(res.data.meals[0]); // single object
+          setMeal(res.data.meals[0]);
         } else {
-          // 2. If not found in API → check localStorage
-          const storedMeals = JSON.parse(localStorage.getItem("customMeals")) || [];
+          const storedMeals =
+            JSON.parse(localStorage.getItem("customMeals")) || [];
           const foundMeal = storedMeals.find((m) => m.idMeal === id);
           setMeal(foundMeal || null);
         }
@@ -30,7 +29,6 @@ const MealPage = ({ favourite, handleFav }) => {
     fetchMeal();
   }, [id]);
 
-  // Collect ingredients
   const ingredients = [];
   if (meal) {
     for (let i = 1; i <= 20; i++) {
@@ -41,6 +39,8 @@ const MealPage = ({ favourite, handleFav }) => {
       }
     }
   }
+  const isInCart = meal && cart.some((item) => item.idMeal === meal.idMeal);
+  const cartItem = meal && cart.find((item) => item.idMeal === meal.idMeal);
 
   if (loading)
     return (
@@ -63,7 +63,7 @@ const MealPage = ({ favourite, handleFav }) => {
           <h1 className="font-bold text-green-500 text-4xl mb-10 underline">
             Meal details
           </h1>
-          <div>
+          <div className="flex gap-3">
             <button
               className={`mb-5 px-4 py-2 rounded-lg transition-all duration-200 ${
                 favourite.some((fav) => fav.idMeal === meal.idMeal)
@@ -73,6 +73,14 @@ const MealPage = ({ favourite, handleFav }) => {
               onClick={() => handleFav(meal)}
             >
               <Heart />
+            </button>
+
+            <button
+              className="mb-5 px-4 py-2 rounded-lg transition-all duration-200 bg-blue-500 text-white hover:bg-blue-600 flex items-center gap-2"
+              onClick={() => addToCart(meal)}
+            >
+              <ShoppingCart size={20} />
+              {isInCart ? `In Cart (${cartItem.quantity})` : "Add to Cart"}
             </button>
           </div>
         </div>

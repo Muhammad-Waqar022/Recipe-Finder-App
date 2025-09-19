@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MealCard from "../Components/MealCard";
 import Search from "../Components/Search";
 import RandomButton from "../Components/RandomButton";
-import api from "../API/api";       
+import api from "../API/api";
 import AddMealForm from "../Components/AddMealForm";
 
 const Home = ({ favourite, handleFav }) => {
@@ -75,8 +75,7 @@ const Home = ({ favourite, handleFav }) => {
     fetchMeals(query);
   };
   return (
-    <div
-     className="max-w-7xl mx-auto px-5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="max-w-7xl mx-auto px-5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="flex flex-col sm:flex-row justify-center items-center px-4">
         <Search
           query={query}
@@ -125,12 +124,7 @@ const Home = ({ favourite, handleFav }) => {
       <div className="mt-10 pb-12 p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
         {meals.length > 0
           ? meals.map((meal) => (
-              <MealCard
-                key={meal.idMeal}
-                meal={meal}
-                handleFav={handleFav}
-                favourite={favourite}
-              />
+              <MealCard key={meal.idMeal} meal={meal} handleFav={handleFav} />
             ))
           : !loading && (
               <p className="text-center col-span-full text-red-500 text-lg">
