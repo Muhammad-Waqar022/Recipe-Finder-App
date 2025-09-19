@@ -27,5 +27,4 @@ const FavMeals = ({ favourite, handleFav }) => {
     </div>
   );
 };
-
 export default FavMeals;

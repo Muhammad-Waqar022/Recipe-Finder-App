@@ -3,6 +3,7 @@ import MealCard from "../Components/MealCard";
 import Search from "../Components/Search";
 import RandomButton from "../Components/RandomButton";
 import api from "../API/api";       
+import AddMealForm from "../Components/AddMealForm";
 
 const Home = ({ favourite, handleFav }) => {
   const [meals, setMeals] = useState([]);
@@ -73,9 +74,9 @@ const Home = ({ favourite, handleFav }) => {
   const handleSearch = () => {
     fetchMeals(query);
   };
-
   return (
-    <div className="max-w-7xl mx-auto px-5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div
+     className="max-w-7xl mx-auto px-5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <div className="flex flex-col sm:flex-row justify-center items-center px-4">
         <Search
           query={query}
@@ -83,6 +84,7 @@ const Home = ({ favourite, handleFav }) => {
           handleSearch={handleSearch}
         />
         <RandomButton handleRandom={handleRandom} />
+        <AddMealForm handleFav={handleFav} />
       </div>
 
       <div>
