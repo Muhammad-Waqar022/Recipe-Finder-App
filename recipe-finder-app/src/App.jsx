@@ -67,11 +67,9 @@ function App() {
       removeFromCart(mealId);
       return;
     }
-
     const newCart = cart.map((item) =>
       item.idMeal === mealId ? { ...item, quantity: newQuantity } : item
     );
-
     setCart(newCart);
     localStorage.setItem("cartItems", JSON.stringify(newCart));
   };
@@ -96,7 +94,6 @@ function App() {
     if (savedFav) {
       setFavourite(JSON.parse(savedFav));
     }
-
     const savedCart = localStorage.getItem("cartItems");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
@@ -127,6 +124,7 @@ function App() {
               updateCartQuantity={updateCartQuantity}
               removeFromCart={removeFromCart}
               clearCart={clearCart}
+              getCartItemCount={getCartItemCount}
             />
           }
         />

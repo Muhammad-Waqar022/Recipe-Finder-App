@@ -52,7 +52,7 @@ const AddMealForm = ({ handleFav }) => {
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg">
             <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
               Add Custom Meal

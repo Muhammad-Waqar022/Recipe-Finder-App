@@ -76,7 +76,7 @@ const MealPage = ({ favourite, handleFav, addToCart, cart }) => {
             </button>
 
             <button
-              className="mb-5 px-4 py-2 rounded-lg transition-all duration-200 bg-blue-500 text-white hover:bg-blue-600 flex items-center gap-2"
+              className="mb-5 px-4 py-2 rounded-lg transition-all duration-200 bg-green-500 text-white hover:bg-green-600 flex items-center gap-2"
               onClick={() => addToCart(meal)}
             >
               <ShoppingCart size={20} />
